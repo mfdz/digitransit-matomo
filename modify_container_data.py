@@ -12,7 +12,7 @@ import os
 
 def main(argv):
 	source_file = sys.argv[1]
-	dest_file = "importReady_" + source_file
+	dest_file = "importReadyContainer.json"
 
 	with open(source_file) as file:
 	    data = json.load(file)

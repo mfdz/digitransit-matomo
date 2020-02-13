@@ -54,9 +54,9 @@ Delete volumes: `docker volume rm <volume>`
 
 ## Export and import
 When you export a version from an existing container, the exported JSON file will have some container specific properties. It is no problem when you'd like to use it as a backup to the same container but if you'd like to import it to another, you have to make some changes beforehand.
-Using the mtm_export_modifier python script you can customize the old, foreign data to your new container. Run the following command:
+Using the python script you can customize the old, foreign data to your new container. Run the following command:
 ```
-MATOMO_IDCONTAINER= MATOMO_IDSITE= MATOMO_MATOMOURL= python mtm_export_modifier.py <source_file_name>
+MATOMO_IDCONTAINER=<containerid> MATOMO_IDSITE=<siteid> MATOMO_MATOMOURL=<url> python modify_container_data.py <source_file_name>
 ```
 where
 * IDCONTAINER is the container ID (it is under the name of the container on the Tag Manager/Dashboard site)
