@@ -1,6 +1,6 @@
 # Reads an exported Matomo Tag Manager version and changes the necessary fields to be import ready.
 
-# Should run as MATOMO_IDCONTAINER= MATOMO_IDSITE= MATOMO_MATOMOURL= python mtm_export_modifier.py source_file_name
+# Should run as MATOMO_IDCONTAINER= MATOMO_IDSITE= MATOMO_MATOMOURL= python modify_container_data.py source_file_name
 # Variables should have the data of the container, you'd like to import to.
 # idcontainer: asdb123
 # idsite is usually 1
