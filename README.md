@@ -56,10 +56,10 @@ Delete volumes: `docker volume rm <volume>`
 When you export a version from an existing container, the exported JSON file will have some container specific properties. It is no problem when you'd like to use it as a backup to the same container but if you'd like to import it to another, you have to make some changes beforehand.
 Using the mtm_export_modifier python script you can customize the old, foreign data to your new container. Run the following command:
 ```
-MATOMO_IDCONTAINER= MATOMO_IDSITE= MATOMO_MATOMOURL= python mtm_export_modifier.py <source_file_name>
+MATOMO_IDCONTAINER=<id_container> MATOMO_IDSITE=<id_site> MATOMO_MATOMOURL=<matomo_url> python mtm_export_modifier.py <source_file_name>
 ```
 where
-* IDCONTAINER is the container ID (it is under the name of the container on the Tag Manager/Dashboard site)
-* IDSITE is the ID of the site (you can find it in Settings/Websites/Manage)
-* MATOMOURL will be http://localhost:8080/ or the URL of the running Matomo server
+* id_container is the container ID (it is under the name of the container on the Tag Manager/Dashboard site)
+* id_site is the ID of the site (you can find it in Settings/Websites/Manage)
+* matomo_url will be http://localhost:8080/ or the URL of the running Matomo server
 * the source_file_name is the file you exported from the older container
