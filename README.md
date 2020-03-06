@@ -1,37 +1,42 @@
+# Digitransit & Matomo (Tag Manager)
+
+This project is aimed at tracking Digitransit user interactions in a GDPR compliant 
+manner with a custom Matomo installation. The tracked interactions are based on an 
+[interaction concept developed by HSL](https://docs.google.com/spreadsheets/d/1kSf225cstroNrUkPvj5cn4zrWHnMWrtUUdveKLW8zbQ/edit#gid=0).
+
+This project provides 
+* a step-by-step tutorial on how to set up your own Matomo server.
+* a tutorial how to import existing MTM container data.
+* a Python script which enables you to change properties in an exported MTM container file.
+* an exported MTM container sample file for Digitransit.
+
 ## Run local Matomo server via official docker image
 
 The db.env, matomo.conf and docker-compose files are from the official [Matomo-Docker GitHub repo](https://github.com/matomo-org/docker/tree/master/.examples/nginx).
 
 ### Installation
 1. set the variables
+    * username, password and database name should be the same in the files so as to create the connection  
     * in the db.env file
         * MATOMO_DATABASE_USERNAME
         * MATOMO_DATABASE_PASSWORD
         * MATOMO_DATABASE_DBNAME
-    * and in the docker-compose files
+    * and in the docker-compose.yml file
+        * MYSQL_USER
+        * MYSQL_PASSWORD
+        * MYSQL_DATABASE
         * MYSQL_ROOT_PASSWORD
 2. run command `docker-compose up` in the directory
-3. database setup (in case you are not using your own mariadb image)
-	1. list the running containers: `docker ps`
-	2. step into the container of the db: `docker exec -it <mariadb container> sh`
-	3. log in to the mysql as root: `mysql -u root -p`, then add <MYSQL_ROOT_PASSWORD> as password
-	4. create database: `CREATE DATABASE <MATOMO_DATABASE_DBNAME>;`
-		* check: `SHOW DATABASES;`
-	5. create user: `CREATE USER '<MATOMO_DATABASE_USERNAME>'@'%' IDENTIFIED BY '<MATOMO_DATABASE_PASSWORD>';`
-		* check: `select user,host from mysql.user;`
-	6. add privileges for user: `GRANT ALL PRIVILEGES ON * . * TO '<MATOMO_DATABASE_USERNAME>'@'%';`
-		* _important: Database user must have the following privileges: CREATE, ALTER, SELECT, INSERT, UPDATE, DELETE, DROP, CREATE TEMPORARY TABLES._
-		* check: `SHOW GRANTS [FOR <MATOMO_DATABASE_USERNAME>]`
-	7. save user privilege modifications: `FLUSH PRIVILEGES;`
-4. open localhost:8080 in browser -> Matomo local installation page
-5. follow the installation steps
-    * database setup: set by default (use MATOMO_DATABASE_USERNAME or root, MATOMO_DATABASE_PASSWORD or MYSQL_ROOT_PASSWORD and MATOMO_DATABASE_DBNAME)
+3. open localhost:8080 in browser -> should see Matomo local installation page
+4. follow the installation steps
+    * database setup: set by default (use MATOMO_DATABASE_USERNAME, MATOMO_DATABASE_PASSWORD and MATOMO_DATABASE_DBNAME)
+    * create super user: you won't be able to modify the super user's username later (you'll be able to add other users)
     * create website: all of the here and now given data can be changed later
 
 ### If you get an error after installation
 The error messages are quite clear in Matomo.
 
-If you have to modify the piwik/config/config.ini.php file:
+If you have to modify the _piwik/config/config.ini.php_ file:
 1. `docker ps`
 2. `docker exec -it <matomo:fpm-alpine container id> sh`
 3. `vi config/config.ini.php`
@@ -43,14 +48,18 @@ Docker-compose uses volumes. Any time you'd like to have a fresh start, you have
 See volumes: `docker volume ls`
 Delete volumes: `docker volume rm <volume>`
 
-## Use Tag Manager: create container with existing data
-1. in the browser log in with created superuser
+## Use Tag Manager
+### Create container
+1. in the browser: log in with created superuser
 2. activate Tag Manager
 3. create a new container (you might have to refresh the page)
 4. copy the install code of the container into the UI
-4. click on Versions, then Import
-5. copy the importReady_ json file, give it a name and save
-6. create a new version
+
+### Add existing container data
+_see Export and import first_ 
+1. click on Versions, then Import
+2. copy your own importReady_ json file, give it a name and save
+3. create a new version
 
 ## Export and import
 When you export a version from an existing container, the exported JSON file will have some container specific properties. It is no problem when you'd like to use it as a backup to the same container but if you'd like to import it to another, you have to make some changes beforehand.
@@ -60,6 +69,31 @@ MATOMO_IDCONTAINER=<containerid> MATOMO_IDSITE=<siteid> MATOMO_MATOMOURL=<url> p
 ```
 where
 * IDCONTAINER is the container ID (it is under the name of the container on the Tag Manager/Dashboard site)
-* IDSITE is the ID of the site (you can find it in Settings/Websites/Manage)
-* MATOMOURL will be http://localhost:8080/ or the URL of the running Matomo server
-* the source_file_name is the file you exported from the older container
+* IDSITE is the ID of the site (you can find it in Administration/Websites/Manage)
+* MATOMOURL will be http://localhost:8080/ locally or the URL of the running Matomo server
+* the source_file_name is the file you exported from the older container / the one you downloaded from here
+
+## The example Digitransit MTM file
+There are an _exampleMIHcontainer.json_ file which was created for the tracking of the 
+[mobil-in-herrenberg.de](https://mobil-in-herrenberg.de) site - based on HSL's Digitransit project.
+If you use another configuration of the Digitransit project, this might be useful for you. But pay attention:
+there must be numerous places where your website differ and therefore the tracking events won't be the same.
+Use this file for testing Matomo Tag Manager services and to see some examples.
+Also, if you'd find a better solution for any of the events, we'd be happy to hear about it!
+
+### What does our container track?
+* source and destination search
+* travel mode selection (public transport, bicycle, walking, park&ride)
+* transport mode selection (bus, rail, subway, carpool)
+* favourites: add, edit, save
+* other itinerary settings:
+    * add, remove via point
+    * edit journey date
+    * highlight itinerary, open details
+    * set journey time (earlier, now, later)
+    * switch journey points order
+* open, save, reset extra settings
+* navigation to the home page
+* open route, stop details
+* language selection
+* ...

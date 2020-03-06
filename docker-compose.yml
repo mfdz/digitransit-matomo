@@ -9,8 +9,8 @@ services:
       - db:/var/lib/mysql
     environment:
       - MYSQL_USER=
-      - MYSQL_DATABASE=
       - MYSQL_PASSWORD=
+      - MYSQL_DATABASE=
       - MYSQL_ROOT_PASSWORD=
     env_file:
       - ./db.env
