@@ -26,7 +26,7 @@ The db.env, matomo.conf and docker-compose files are from the official [Matomo-D
         * MYSQL_PASSWORD
         * MYSQL_DATABASE
         * MYSQL_ROOT_PASSWORD
-2. run command `docker-compose up` in the directory
+2. run command `docker-compose up` in the right directory
 3. open localhost:8080 in browser -> should see Matomo local installation page
 4. follow the installation steps
     * database setup: set by default (use MATOMO_DATABASE_USERNAME, MATOMO_DATABASE_PASSWORD and MATOMO_DATABASE_DBNAME)
@@ -74,18 +74,21 @@ where
 * MATOMOURL will be http://localhost:8080/ locally or the URL of the running Matomo server
 * the source_file_name is the file you exported from the older container / the one you downloaded from here
 
-## The example Digitransit MTM file
-There is an _exampleMIHcontainer.json_ file which was created for the tracking of the 
-[mobil-in-herrenberg.de](https://mobil-in-herrenberg.de) site - based on [HSL's Digitransit project](https://github.com/hsldevcom/digitransit-ui).
-If you use another configuration of the Digitransit project, this might be useful for you. But pay attention:
-there must be numerous places where your website differ and therefore the tracking events won't be the same.
-Use this file for testing Matomo Tag Manager services and to see some examples.
-Also, if you'd find a better solution for any of the events, we'd be happy to hear about it!
+## The example Digitransit MTM files
+There is an _exampleDTGeneralContainer.json_ file containing events (tags and triggers) which could be used for most
+ configurations of [HSL's Digitransit project](https://github.com/hsldevcom/digitransit-ui).
 
-### What does our container track?
+There is also an _exampleMIHcontainer.json_ file which was created for the tracking of the 
+[mobil-in-herrenberg.de](https://mobil-in-herrenberg.de) site - based on the Digitransit project.
+Use this file to see some more examples. But pay attention: there must be numerous places where your website differ 
+and therefore the tracking events won't be the same.
+
+If using these examples you'd find a better solution for any of the events, we'd be happy to hear about it!
+
+### What do these containers track?
 * source and destination search
 * travel mode selection (public transport, bicycle, walking, park&ride)
-* transport mode selection (bus, rail, subway, carpool)
+* transport mode selection (bus, rail, subway)
 * favourites: add, edit, save
 * other itinerary settings:
     * add, remove via point

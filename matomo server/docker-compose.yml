@@ -13,7 +13,7 @@ services:
       - MYSQL_DATABASE=
       - MYSQL_ROOT_PASSWORD=
     env_file:
-      - ./db.env
+      - db.env
 
   app:
     image: matomo:fpm-alpine
@@ -27,7 +27,7 @@ services:
     environment:
       - MATOMO_DATABASE_HOST=db
     env_file:
-      - ./db.env
+      - db.env
 
   web:
     image: nginx:alpine
