@@ -53,7 +53,8 @@ Delete volumes: `docker volume rm <volume>`
 1. in the browser: log in with created superuser
 2. activate Tag Manager
 3. create a new container (you might have to refresh the page)
-4. copy the install code of the container into the UI
+4. copy the install code of the container into an appropriate place of the source code (best is a snippet which appears 
+on all sites, for example an overall header)
 
 ### Add existing container data
 _see Export and import first_ 
@@ -74,8 +75,8 @@ where
 * the source_file_name is the file you exported from the older container / the one you downloaded from here
 
 ## The example Digitransit MTM file
-There are an _exampleMIHcontainer.json_ file which was created for the tracking of the 
-[mobil-in-herrenberg.de](https://mobil-in-herrenberg.de) site - based on HSL's Digitransit project.
+There is an _exampleMIHcontainer.json_ file which was created for the tracking of the 
+[mobil-in-herrenberg.de](https://mobil-in-herrenberg.de) site - based on [HSL's Digitransit project](https://github.com/hsldevcom/digitransit-ui).
 If you use another configuration of the Digitransit project, this might be useful for you. But pay attention:
 there must be numerous places where your website differ and therefore the tracking events won't be the same.
 Use this file for testing Matomo Tag Manager services and to see some examples.
